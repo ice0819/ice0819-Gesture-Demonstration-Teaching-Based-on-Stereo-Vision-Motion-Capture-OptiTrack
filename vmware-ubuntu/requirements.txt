@@ -1,0 +1,6 @@
+# Python packages used by gripper_test.py and opti_data.py on Ubuntu.
+# ROS 2 packages (rclpy and tm_msgs) must be installed/built through ROS 2,
+# not pip.
+minimalmodbus
+pyserial
+openpyxl
