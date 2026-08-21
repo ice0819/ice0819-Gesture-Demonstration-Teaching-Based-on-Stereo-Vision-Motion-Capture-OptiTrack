@@ -50,7 +50,7 @@ python -m pip install -r .\requirements.txt
 可先在 Windows PowerShell 測試 VM 或機械手臂的 IP：
 
 ```powershell
-ping 192.168.250.100
+ping 192.168.250.30
 ```
 
 若 VM 使用 NAT 而無法直接接收封包，建議改用橋接網路，或依實際環境設定 UDP 連接埠轉送及防火牆規則。
