@@ -1,4 +1,4 @@
-# OptiTrack 機械手臂教導系統（Windows端）
+# OptiTrack 機械手臂教導系統（Windows）
 
 本專案使用 OptiTrack 相機與 Motive 取得剛體（Rigid Body）的即時姿態，先在 Windows 端確認追蹤資料是否正確，再將座標及旋轉資訊透過 UDP 傳送至 VM 虛擬機，供後續機械手臂教導、軌跡記錄或控制程式使用。
 
@@ -50,7 +50,7 @@ python -m pip install -r .\requirements.txt
 可先在 Windows PowerShell 測試 VM 或機械手臂的 IP：
 
 ```powershell
-ping 192.168.250.30
+ping 192.168.250.100
 ```
 
 若 VM 使用 NAT 而無法直接接收封包，建議改用橋接網路，或依實際環境設定 UDP 連接埠轉送及防火牆規則。
@@ -126,17 +126,38 @@ cd ".\NatNetSDK\Samples\PythonClient"
 python .\test.py
 ```
 
-同一台 Windows 電腦使用 loopback 與 Multicast 時，也可明確指定參數：
-
-```powershell
-python .\test.py 127.0.0.1 127.0.0.1 Multicast
-```
-
 程式執行後揮動剛體，終端機應持續顯示 Rigid Body 1 的 X、Y、Z 座標。
 
 - 按第一次 `Q`：記錄起點
 - 移動剛體後再按一次 `Q`：顯示 X、Y、Z 位移、三維距離、經過時間與平均速度
 - 按 `Esc`：結束程式
+
+OptiTrack 量測出的位移有可能經過縮放，因此正式使用座標傳輸功能前，應先使用 `test.py` 校正距離倍率：
+
+1. 將 OptiTrack 剛體穩固地安裝在機械手臂末端。
+2. 執行 `test.py`，按第一次 `Q` 記錄起點。
+3. 控制機械手臂沿單一座標軸精確移動 `100 mm`。
+4. 再按一次 `Q`，讀取程式顯示的三維位移 `3D displacement`。
+5. 使用下式計算縮放倍率：
+
+```text
+縮放倍率 = OptiTrack 量測位移（mm）÷ 機械手臂實際位移（100 mm）
+```
+
+例如機械手臂實際移動 `100 mm`，而 OptiTrack 顯示 `154 mm`：
+
+```text
+縮放倍率 = 154 ÷ 100 = 1.54
+```
+
+將計算結果填入 `opti_data.py`：
+
+```python
+ENABLE_OPTITRACK_SCALE_CORRECTION = True
+OPTITRACK_DISTANCE_SCALE = 1.54
+```
+
+`opti_data.py` 會以 `1 / OPTITRACK_DISTANCE_SCALE` 修正送出的 X、Y、Z。建議沿不同座標軸重複量測數次並取平均值，以降低定位抖動及單次量測誤差。
 
 若持續出現等待資料的訊息，請檢查 Motive Streaming 是否開啟、剛體 ID、IP、Multicast/Unicast 模式，以及 Windows 防火牆。
 
