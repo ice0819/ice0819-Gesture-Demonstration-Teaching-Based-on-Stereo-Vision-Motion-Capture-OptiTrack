@@ -1,0 +1,4 @@
+cd C:\Users\kylem\Desktop\NatNet_SDK_4.1.1\NatNetSDK\Samples\PythonClient
+activate mediapipe
+python test.py
+python opti_data.py

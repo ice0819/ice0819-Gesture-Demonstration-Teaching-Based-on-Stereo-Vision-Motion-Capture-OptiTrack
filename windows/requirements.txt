@@ -1,0 +1,5 @@
+# Compatible with the legacy `mp.solutions.hands` API used by
+# testopen.py and opti_data.py.
+mediapipe==0.10.14
+opencv-python==4.10.0.84
+numpy==1.26.4
