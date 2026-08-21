@@ -226,7 +226,7 @@ VM 端主要使用以下兩支程式：
 
 ### VM 環境需求
 
-先關閉 Ubuntu 虛擬機，再開啟 VMware 的 `Virtual Machine Settings > Network Adapter`。勾選 `Connected` 與 `Connect at power on`，並將網路模式設定為 `Bridged: Connected directly to the physical network`，讓 VM 能直接加入 Windows 所連接的實體網路並與機械手臂互通。
+開啟 VMware 的 `Virtual Machine Settings > Network Adapter`。勾選 `Connected` 與 `Connect at power on`，並將網路模式設定為 `Bridged: Connected directly to the physical network`，讓 VM 能直接加入 Windows 所連接的實體網路並與機械手臂互通。
 
 ![圖 1：VMware Ubuntu 虛擬機網路設定](photo/1.png)
 
@@ -236,7 +236,6 @@ VM 端主要使用以下兩支程式：
 
 ![圖 1-2：重新開關 Windows Wi-Fi](photo/1-2.png)
 
-> 重新開關 Wi-Fi 會短暫中斷 Windows、VM、OptiTrack 與機械手臂之間的網路連線。請先停止控制程式並確保機械手臂處於安全狀態，再執行此操作。
 
 VMware 的 USB 裝置設定必須將 USB-to-RS485 轉接器連接至 Ubuntu VM，而不是留在 Windows 主機。進入 Ubuntu 後確認裝置：
 
