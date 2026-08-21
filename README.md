@@ -1,4 +1,4 @@
-# OptiTrack 機械手臂教導系統（Windows）
+# OptiTrack 機械手臂教導系統（Windows端）
 
 本專案使用 OptiTrack 相機與 Motive 取得剛體（Rigid Body）的即時姿態，先在 Windows 端確認追蹤資料是否正確，再將座標及旋轉資訊透過 UDP 傳送至 VM 虛擬機，供後續機械手臂教導、軌跡記錄或控制程式使用。
 
